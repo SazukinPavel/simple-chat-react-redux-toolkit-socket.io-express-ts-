@@ -1,13 +1,18 @@
 import React from "react";
+import { useTypedDispatch } from "../../hooks/useTypedDispatch";
+import { setIsConnected, setUserName } from "../../store/reducers/chatReducer";
 import styles from './Login.module.scss'
 
-interface LoginProps{
-    connect:()=>void
-}
 
-function Login({connect}:LoginProps) {
+function Login() {
 
     const [name, setName] = React.useState<string>('');
+    const dispatch=useTypedDispatch()
+
+    const connect=()=>{
+        dispatch(setUserName(name))
+        dispatch(setIsConnected(true))
+    }
 
     return ( 
         <div>

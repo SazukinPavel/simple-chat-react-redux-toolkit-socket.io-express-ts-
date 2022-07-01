@@ -1,19 +1,23 @@
-import React from "react";
-import styles from './Messages.module.scss'
+import React, { useEffect } from "react";
+import { useSocket } from "../../hooks/useSocket";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
-interface MessagesProps{
-    messages:string[]
-    disconnect:()=>void
-    send:(mes:string)=>void
-}
 
-function Messages({messages,disconnect,send}:MessagesProps){
+function Messages(){
    
+    const {messages,username}=useTypedSelector((s)=>s.chat)
+    const socket=useSocket()
     const [message, setMessage] = React.useState('');
+
+    useEffect(()=>{
+        console.log(socket);
+        
+        socket.connect()
+    },[])
 
     const sendMessage=()=>{
         if(message){
-            send(message)
+            socket.send(message,username)
         }
     }
    
@@ -25,11 +29,11 @@ function Messages({messages,disconnect,send}:MessagesProps){
                     <input value={message} onChange={e=>setMessage(e.target.value)}></input>
                 </label>
                 <div>
-                    {messages.map((m)=><p>{m}</p>)}
+                    {messages.map((m)=><p>{m.message}</p>)}
                 </div>
             </div>
             <div>
-                <button onClick={disconnect}>Отсоеденится</button>
+                <button onClick={socket.disconect}>Отсоединится</button>
                 <button onClick={sendMessage}>Отправить</button>
             </div>
         </div>
