@@ -13,6 +13,7 @@ export const useSocket=()=>{
         connect(){
             const webSocket = new WebSocket('ws:localhost:4200/')
             webSocket.onopen = () => {
+              dispatch(resetMessages())
             }
             webSocket.onclose = () => {
               dispatch(setIsConnected(false))

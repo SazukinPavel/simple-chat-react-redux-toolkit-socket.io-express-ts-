@@ -15,12 +15,14 @@ function Login() {
     }
 
     return ( 
-        <div>
+        <div className={styles.Login}>
             <label>
                 Ваше имя:
                 <input value={name} onChange={e=>setName(e.target.value)}></input>
             </label>
-            <button onClick={connect}>Подключится</button>
+            <div className={styles.buttons}>
+                <button onClick={connect}>Подключится</button>
+            </div>
         </div>
      );
 }

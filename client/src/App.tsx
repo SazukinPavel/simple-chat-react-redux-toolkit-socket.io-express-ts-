@@ -1,5 +1,5 @@
 import Login from './components/Login';
-import Messages from './components/Messages';
+import Messages from './store/reducers';
 import './App.scss'
 import { useTypedSelector } from './hooks/useTypedSelector';
 
@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className='chat'>
-      <h1>{isConnected ? 'Подключено' : 'Не подключено'}</h1>
+      <h1 className={isConnected?'connect':'disconnect'}>{isConnected ? 'Подключено' : 'Не подключено'}</h1>
       {
         !isConnected ?
           <div>
