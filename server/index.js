@@ -1,4 +1,3 @@
-
 const express = require('express');
 const http = require('http');
 const { Server } = require("socket.io");
@@ -12,17 +11,19 @@ const io = new Server(server,{
     }
 });
 
-app.post('/rooms', (req, res) => {
-  
-});
-
 io.on('connection', (socket) => {
-    socket.emit('newMessage',{data:{
-        message:'New user!!!'
+    console.log(socket.request._query.username);
+    io.sockets.emit('newMessage',{data:{
+        message:`Пользователь ${socket.request._query.username} вошёл в чат.`
     }})
     socket.on('message',(data)=>{
         io.sockets.emit('newMessage',{data})
     })
+    socket.on("disconnect", (reason) => {
+        io.sockets.emit('newMessage',{data:{
+            message:`Пользователь ${socket.request._query.username} вышел из чата.`
+        }})
+    });
 })
 
 server.listen(4200, () => {
