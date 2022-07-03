@@ -1,19 +1,30 @@
-const WebSocket=require('ws')
 
-const server=new WebSocket.Server({port:4200})
+const express = require('express');
+const http = require('http');
+const { Server } = require("socket.io");
 
-server.on('connection',(ws)=>{
-    
-    ws.send(JSON.stringify({username:'ADMIN',message:'Hello user!'}))
+const app = express();
+app.use(express.json())
+const server = http.createServer(app);
+const io = new Server(server,{ 
+    cors:{
+        origin: "http://localhost:3000",
+    }
+});
 
-    ws.on('message',(data)=>{
-        data=JSON.parse(data)
-        broadcastMessage(data)
+app.post('/rooms', (req, res) => {
+  
+});
+
+io.on('connection', (socket) => {
+    socket.emit('newMessage',{data:{
+        message:'New user!!!'
+    }})
+    socket.on('message',(data)=>{
+        io.sockets.emit('newMessage',{data})
     })
 })
 
-function broadcastMessage(message){
-    server.clients.forEach((c)=>{
-        c.send(JSON.stringify(message))
-    })
-}
+server.listen(4200, () => {
+  console.log('listening on *:4200');
+});
