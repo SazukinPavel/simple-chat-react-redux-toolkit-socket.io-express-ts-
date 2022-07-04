@@ -1,4 +1,4 @@
-import { Message } from "../../../types/Message";
+import { Message } from "../../../../types/Message";
 import styles from './MessageCard.module.scss'
 
 function MessageCard({username,message}:Message) {

@@ -1,20 +1,17 @@
 import React from "react";
 import { useSocket } from "../../hooks/useSocket";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import MessageCard from "./Message/Message";
+import Chat from "./Chat";
 import styles from './Messages.module.scss' 
+import UsersList from "./UsersList";
 
 function Messages(){
 
-    const {messages,room}=useTypedSelector((s)=>s.chat)
+    const {room}=useTypedSelector((s)=>s.chat)
     const socket=useSocket()
     const [message, setMessage] = React.useState('');
-    const messagesDivRef=React.useRef<HTMLDivElement>(null)
 
-    React.useEffect(()=>{
-        messagesDivRef.current?.scroll({top:messagesDivRef.current.scrollHeight})
-    },[messages])
-
+   
     const sendMessage=()=>{
         if(message){
             socket.send(message)
@@ -28,9 +25,10 @@ function Messages(){
     return ( 
         <div className={styles.Messages}>
             <div className={styles.MessageBox}>
-                <h3>Комната №{room}</h3>
-                <div ref={messagesDivRef} className={styles.DivMessages}>
-                    {messages.map((m,i)=><MessageCard key={i} {...m}/>)}
+                <h3 className={styles.Header}>Комната №{room}</h3>
+                <div className={styles.ChatBlock}>
+                    <Chat/>
+                    <UsersList/>
                 </div>
                 <label>
                     Сообщение:
