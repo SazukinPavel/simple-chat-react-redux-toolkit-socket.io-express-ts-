@@ -21,7 +21,7 @@ export const useSocket = () => {
       dispatch(resetMessages())
     });
     webSocket.on('newMessage',(message:MessageEvent)=>{
-      dispatch(pushMessage(message.data))
+      dispatch(pushMessage(message.data.message))
     })
     socketRef.current = webSocket
     return ()=>{

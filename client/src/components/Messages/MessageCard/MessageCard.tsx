@@ -1,7 +1,8 @@
 import { Message } from "../../../types/Message";
-import styles from './Message.module.scss'
+import styles from './MessageCard.module.scss'
 
 function MessageCard({username,message}:Message) {
+    
     return ( 
         <div className={styles.Message}>
             <p className={styles.message}>{message}</p>

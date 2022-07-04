@@ -1,6 +1,10 @@
 .Messages{
     margin-top: 20px;
     .MessageBox{
+        h3{
+            text-align: center;
+            font-size: 35px;
+        }
         label{
             font-size: 32px;
             input{

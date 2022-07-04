@@ -6,7 +6,7 @@ import styles from './Messages.module.scss'
 
 function Messages(){
 
-    const {messages}=useTypedSelector((s)=>s.chat)
+    const {messages,room}=useTypedSelector((s)=>s.chat)
     const socket=useSocket()
     const [message, setMessage] = React.useState('');
     const messagesDivRef=React.useRef<HTMLDivElement>(null)
@@ -20,7 +20,7 @@ function Messages(){
             socket.send(message)
         }
     }
-
+    
     const disconect=()=>{
         socket.disconect()
     }
@@ -28,6 +28,7 @@ function Messages(){
     return ( 
         <div className={styles.Messages}>
             <div className={styles.MessageBox}>
+                <h3>Комната №{room}</h3>
                 <div ref={messagesDivRef} className={styles.DivMessages}>
                     {messages.map((m,i)=><MessageCard key={i} {...m}/>)}
                 </div>
